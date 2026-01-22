@@ -34,3 +34,9 @@ This repository documents configuration decisions, service layout, and operation
 ## Status
 Actively used personal system.
 This repository exists to document infrastructure and operational decisions rather than provide a deployable product.
+
+## Known Limitations / Cleanup
+- Configuration and directory layout evolved organically and could be standardized
+- No automated deployment or compose-level orchestration
+- Documentation reflects current state but could be expanded with diagrams or setup scripts
+
