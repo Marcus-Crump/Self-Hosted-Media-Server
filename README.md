@@ -15,7 +15,7 @@ This repository documents configuration decisions, service layout, and operation
 - Bazarr
 - Overseer
 - Flarsolverr
-- qBittorrent (if applicable)
+- qBittorrent
 
 ## Infrastructure
 - Linux host
