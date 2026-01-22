@@ -12,6 +12,9 @@ This repository documents configuration decisions, service layout, and operation
 - Sonarr
 - Radarr
 - Prowlarr
+- Bazarr
+- Overseer
+- Flarsolverr
 - qBittorrent (if applicable)
 
 ## Infrastructure
@@ -22,7 +25,7 @@ This repository documents configuration decisions, service layout, and operation
 
 ## What I Did
 - Deployed and configured media services as Docker containers
-- Managed container volumes, networking, and restart policies
+- Managed container volumes and networking
 - Troubleshot DNS, networking, and service availability issues
 - Performed routine updates and system maintenance to maintain uptime
 
