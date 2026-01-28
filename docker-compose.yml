@@ -1,0 +1,279 @@
+---
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=13001
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/sonarr-config:/config
+      - /media/Drive2/data/media:/data
+      - /media/Drive2/data/torrents:/data/torrents
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=13002
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/radarr-config:/config
+      - /media/Drive2/data:/data
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    user: 1000:13000
+    volumes:
+      - /media/Drive2/config/recyclarr:/config
+    environment:
+      - TZ=America/Chicago
+    restart: unless-stopped
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=13003
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/lidarr-config:/config
+      - /media/Drive2/data:/data
+    ports:
+      - "8686:8686"
+    restart: unless-stopped
+
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3
+    environment:
+      - PUID=13005
+      - PGID=13000
+      - UMASK=002
+    volumes:
+      - /media/Drive2/config/mylar-config:/config
+      - /media/Drive2/data:/data
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    environment:
+      - user=13014:13000
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/audiobookshelf:/config
+      - /media/Drive2/data/media/audiobooks:/audiobooks
+      - /media/Drive2/data/media/podcasts:/podcasts
+      - /media/Drive2/data/media/audiobookshelf-metadata:/metadata
+    ports:
+      - "13378:80"
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=13013
+      - PGID=13000
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/bazarr-config:/config
+      - /media/Drive2/data/media:/media
+    ports:
+      - "6767:6767"
+    restart: unless-stopped
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=13009
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/overseerr-config:/app/config
+    ports:
+      - "5055:5055"
+    restart: unless-stopped
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - PUID=13012
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/jellyseerr-config:/app/config
+    ports:
+      - "5056:5055"
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=13006
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/prowlarr-config:/config
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=13008
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/jackett-config:/config
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=America/Chicago
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=13010
+      - PGID=13000
+      - VERSION=docker
+      - PLEX_CLAIM=
+    volumes:
+      - /media/Drive2/config/plex-config:/config
+      - /media/Drive2/data/media:/media
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/jellyfin-config:/config
+      - /media/Drive2/data/media:/data
+    ports:
+      - "8096:8096"
+    restart: unless-stopped
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PUID=13007
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+      - WEBUI_PORTS=8080/tcp,8080/udp
+      - VPN_ENABLED=true
+      - VPN_CONF=wg0
+      - VPN_PROVIDER=generic
+      - VPN_LAN_NETWORK=100.64.0.0/10
+      - VPN_LAN_LEAK_ENABLED="false
+      - VPN_EXPOSE_PORTS_ON_LAN
+      - VPN_AUTO_PORT_FORWARD=false
+      - VPN_PORT_REDIRECTS=
+      - VPN_AUTO_PORT_FORWARD_TO_PORTS=5687
+      - VPN_KEEP_LOCAL_DNS=false
+      - VPN_NAMESERVERS=1.1.1.1,8.8.8.8
+      - VPN_FIREWALL_TYPE=auto
+      - PRIVOXY_ENABLED=false
+      - UNBOUND_ENABLED=false
+      - WEBUI_HOST=0.0.0.0
+      - UNBOUND_NAMESERVERS
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    volumes:
+      - /media/Drive2/config/qbittorrent:/config
+      - /media/Drive2/data/torrents:/data/torrents
+      - /media/Drive2/data/torrents:/data/torrents/mkvs
+
+  unpackerr:
+    image: ghcr.io/hotio/unpackerr
+    container_name: unpackerr
+    environment:
+      - PUID=13016
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/unpackerr:/config
+      - /media/Drive2/data:/data
+    restart: unless-stopped
+
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    environment:
+      - PORT=11011
+      - PUID=1000
+      - PGID=13000
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/cleanuparr:/config
+    ports:
+      - "11011:11011"
+    restart: unless-stopped
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    environment:
+      - PUID=13011
+      - PGID=13000
+      - UMASK=002
+      - TZ=America/Chicago
+    volumes:
+      - /media/Drive2/config/sabnzbd-config:/config
+      - /media/Drivedata/usenet:/data/usenet
+
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
