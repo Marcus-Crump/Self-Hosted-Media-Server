@@ -31,7 +31,7 @@ This repository documents configuration decisions, service layout, and operation
 
 ## Repository Contents
 - Documentation describing the system layout and services
-- Example configuration files (with sensitive data removed)
+- Example configuration files
 - Notes on setup, maintenance, and known issues
 
 ## Status
